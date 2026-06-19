@@ -3,235 +3,696 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jayesh Goyal | Cybersecurity</title>
+<title>Zer0Day Security Platform</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#0a0a0f;color:#c5dff5;
-font-family:'Courier New',monospace;}
+font-family:'Courier New',monospace;
+min-height:100vh;}
 body::before{content:'';position:fixed;
 inset:0;background:repeating-linear-gradient(
 0deg,transparent,transparent 3px,
 rgba(0,180,255,0.02) 3px,
 rgba(0,180,255,0.02) 4px);
 pointer-events:none;z-index:999;}
-.container{max-width:900px;margin:0 auto;
-padding:2rem 1rem;}
-header{text-align:center;padding:3rem 0;
+
+/* NAV */
+nav{background:#050c17;border-bottom:
+1px solid #0d2040;padding:1rem 2rem;
+display:flex;align-items:center;
+justify-content:space-between;
+position:sticky;top:0;z-index:100;}
+.logo{color:#00b4ff;font-size:1.2rem;
+font-weight:bold;text-shadow:
+0 0 10px rgba(0,180,255,0.5);}
+.nav-links{display:flex;gap:1.5rem;}
+.nav-links a{color:#3a6080;
+text-decoration:none;font-size:0.8rem;
+transition:color 0.2s;}
+.nav-links a:hover{color:#00b4ff;}
+
+/* HERO */
+.hero{text-align:center;padding:4rem 1rem;
 border-bottom:1px solid #0d2040;}
-.name{font-size:2.5rem;font-weight:bold;
-color:#00b4ff;text-shadow:0 0 20px rgba(0,180,255,0.5);}
-.title{color:#3a6080;margin-top:0.5rem;
-font-size:1rem;letter-spacing:0.2em;}
-.status{display:inline-block;
-margin-top:1rem;padding:0.3rem 1rem;
-border:1px solid #00ff9d;color:#00ff9d;
-border-radius:20px;font-size:0.8rem;}
-.section{margin:3rem 0;}
-.section h2{color:#00b4ff;font-size:1.3rem;
-letter-spacing:0.15em;margin-bottom:1.5rem;
-padding-bottom:0.5rem;
-border-bottom:1px solid #0d2040;}
-.about-text{color:#8a9bb5;line-height:1.8;
-font-size:0.95rem;}
-.certs{display:grid;
-grid-template-columns:1fr 1fr;
-gap:1rem;margin-top:1rem;}
-.cert{background:#050c17;
+.hero h1{font-size:clamp(1.5rem,4vw,2.5rem);
+color:#00b4ff;text-shadow:
+0 0 20px rgba(0,180,255,0.4);
+margin-bottom:0.5rem;}
+.hero p{color:#3a6080;font-size:0.9rem;
+margin-bottom:1.5rem;}
+.hero-badges{display:flex;gap:0.5rem;
+justify-content:center;flex-wrap:wrap;}
+.badge{background:#050c17;
+border:1px solid #0d2040;
+color:#00ff9d;padding:0.3rem 0.8rem;
+border-radius:20px;font-size:0.75rem;}
+
+/* CONTAINER */
+.container{max-width:900px;
+margin:0 auto;padding:2rem 1rem;}
+
+/* TABS */
+.tabs{display:flex;gap:0.5rem;
+margin-bottom:2rem;flex-wrap:wrap;}
+.tab{background:transparent;
+border:1px solid #0d2040;
+color:#3a6080;padding:0.6rem 1.2rem;
+border-radius:4px;cursor:pointer;
+font-family:'Courier New',monospace;
+font-size:0.8rem;transition:all 0.2s;}
+.tab:hover,.tab.active{
+border-color:#00b4ff;color:#00b4ff;
+background:rgba(0,180,255,0.05);}
+
+/* TOOL PANELS */
+.panel{display:none;animation:fadeIn 0.3s ease;}
+.panel.active{display:block;}
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}}
+
+.tool-box{background:#050c17;
+border:1px solid #0d2040;
+border-radius:4px;padding:1.5rem;
+margin-bottom:1rem;}
+.tool-box h2{color:#00b4ff;
+font-size:1rem;margin-bottom:0.3rem;
+letter-spacing:0.1em;}
+.tool-box p{color:#3a6080;
+font-size:0.8rem;margin-bottom:1rem;}
+
+input[type=text],input[type=email]{
+width:100%;background:#0a0a0f;
+border:1px solid #0d2040;
+color:#c5dff5;padding:0.75rem;
+border-radius:4px;font-family:
+'Courier New',monospace;
+font-size:0.9rem;outline:none;
+transition:border-color 0.2s;}
+input:focus{border-color:#00b4ff;}
+
+.btn{background:#00b4ff;color:#0a0a0f;
+border:none;padding:0.75rem 1.5rem;
+border-radius:4px;cursor:pointer;
+font-family:'Courier New',monospace;
+font-size:0.85rem;font-weight:bold;
+margin-top:0.75rem;transition:all 0.2s;
+letter-spacing:0.1em;width:100%;}
+.btn:hover{box-shadow:
+0 0 15px rgba(0,180,255,0.4);}
+
+.result{margin-top:1rem;padding:1rem;
+border-radius:4px;font-size:0.85rem;
+line-height:1.7;display:none;}
+.result.show{display:block;
+animation:fadeIn 0.3s ease;}
+.safe{background:rgba(0,255,157,0.08);
+border:1px solid rgba(0,255,157,0.2);
+color:#00ff9d;}
+.danger{background:rgba(255,59,92,0.08);
+border:1px solid rgba(255,59,92,0.2);
+color:#ff3b5c;}
+.warning{background:rgba(255,214,10,0.08);
+border:1px solid rgba(255,214,10,0.2);
+color:#ffd60a;}
+.info{background:rgba(0,180,255,0.08);
+border:1px solid rgba(0,180,255,0.2);
+color:#00b4ff;}
+
+/* SCORE BAR */
+.score-bar{background:#0a0a0f;
+border-radius:10px;height:8px;
+margin:0.5rem 0;overflow:hidden;}
+.score-fill{height:100%;border-radius:10px;
+transition:width 0.5s ease;}
+
+/* NEWS FEED */
+.news-item{background:#050c17;
 border:1px solid #0d2040;
 border-left:3px solid #00b4ff;
-padding:1rem;border-radius:4px;}
-.cert h3{color:#00b4ff;font-size:0.85rem;
-margin-bottom:0.3rem;}
-.cert p{color:#3a6080;font-size:0.75rem;}
-.tools{display:grid;
-grid-template-columns:repeat(auto-fill,
-minmax(250px,1fr));gap:1rem;}
-.tool{background:#050c17;
-border:1px solid #0d2040;
-padding:1.2rem;border-radius:4px;
-transition:border-color 0.2s;}
-.tool:hover{border-color:#00b4ff;}
-.tool-icon{font-size:1.5rem;
-margin-bottom:0.5rem;}
-.tool h3{color:#00b4ff;font-size:0.9rem;
-margin-bottom:0.4rem;}
-.tool p{color:#3a6080;font-size:0.78rem;
-line-height:1.5;}
-.skills{display:flex;flex-wrap:wrap;gap:0.5rem;}
-.skill{background:#050c17;
-border:1px solid #0d2040;
-color:#00b4ff;padding:0.3rem 0.8rem;
-border-radius:3px;font-size:0.78rem;}
-.contact{text-align:center;
-padding:2rem 0;
-border-top:1px solid #0d2040;}
-.contact a{color:#00b4ff;
-text-decoration:none;
-margin:0 1rem;font-size:0.9rem;}
-.contact a:hover{text-shadow:
-0 0 10px rgba(0,180,255,0.5);}
-footer{text-align:center;
-color:#1a3a5c;font-size:0.75rem;
-padding:1rem 0;}
+padding:1rem;margin-bottom:0.75rem;
+border-radius:4px;}
+.news-item h3{color:#00b4ff;
+font-size:0.9rem;margin-bottom:0.3rem;}
+.news-item p{color:#3a6080;
+font-size:0.78rem;line-height:1.5;}
+.news-date{color:#1a3a5c;
+font-size:0.7rem;margin-top:0.3rem;}
+
+/* ABOUT */
+.about-grid{display:grid;
+grid-template-columns:1fr 1fr;
+gap:1rem;margin-top:1rem;}
 @media(max-width:600px){
-.name{font-size:1.8rem;}
-.certs{grid-template-columns:1fr;}
-}
+.about-grid{grid-template-columns:1fr;}
+.nav-links{display:none;}}
+.about-card{background:#050c17;
+border:1px solid #0d2040;
+border-radius:4px;padding:1rem;}
+.about-card h3{color:#00b4ff;
+font-size:0.85rem;margin-bottom:0.5rem;}
+.about-card p{color:#3a6080;
+font-size:0.78rem;line-height:1.6;}
+
+footer{text-align:center;
+padding:2rem;color:#1a3a5c;
+font-size:0.75rem;
+border-top:1px solid #0d2040;
+margin-top:3rem;}
+footer span{color:#00b4ff;}
 </style>
 </head>
 <body>
+
+<nav>
+<div class="logo">&gt; zer0day.tech</div>
+<div class="nav-links">
+<a href="#" onclick="showTab('url')">
+URL Checker</a>
+<a href="#" onclick="showTab('password')">
+Password</a>
+<a href="#" onclick="showTab('news')">
+Cyber News</a>
+<a href="#" onclick="showTab('about')">
+About</a>
+</div>
+</nav>
+
+<div class="hero">
+<h1>🔒 Cyber Safety Platform</h1>
+<p>Free cybersecurity tools for everyone
+— Built by Jayesh Goyal</p>
+<div class="hero-badges">
+<span class="badge">● URL Scanner</span>
+<span class="badge">● Password Analyzer</span>
+<span class="badge">● Cyber News</span>
+<span class="badge">● Free Forever</span>
+</div>
+</div>
+
 <div class="container">
-<header>
-<div class="name">&gt; Jayesh Goyal</div>
-<div class="title">
-CYBERSECURITY STUDENT | ETHICAL HACKER
-</div>
-<div class="status">
-● Available for Internship
-</div>
-</header>
-
-<div class="section">
-<h2>// ABOUT ME</h2>
-<p class="about-text">
-3rd Year BCA Student at SDJ International
-College, Gujarat. Passionate about
-cybersecurity, digital forensics, and
-ethical hacking. I build practical security
-tools and have hands-on experience in
-network reconnaissance, OSINT investigation,
-and incident response.
-</p>
+<div class="tabs">
+<button class="tab active"
+onclick="showTab('url')">
+🔍 URL Checker</button>
+<button class="tab"
+onclick="showTab('password')">
+🛡️ Password Strength</button>
+<button class="tab"
+onclick="showTab('email')">
+📧 Email Safety</button>
+<button class="tab"
+onclick="showTab('news')">
+📰 Cyber News India</button>
+<button class="tab"
+onclick="showTab('about')">
+👨‍💻 About</button>
 </div>
 
-<div class="section">
-<h2>// CERTIFICATIONS</h2>
-<div class="certs">
-<div class="cert">
-<h3>🏆 Google Cybersecurity</h3>
-<p>Professional Certificate<br>
-Issued by Google via Coursera</p>
-</div>
-<div class="cert">
-<h3>🏆 CEH by Pearson</h3>
-<p>Certified Ethical Hacker<br>
-Issued by Pearson</p>
-</div>
+<!-- URL CHECKER -->
+<div id="panel-url" class="panel active">
+<div class="tool-box">
+<h2>// URL PHISHING CHECKER</h2>
+<p>Check if a URL is safe or suspicious
+before clicking it</p>
+<input type="text" id="url-input"
+placeholder="Enter URL to check...
+e.g. https://suspicious-link.com">
+<button class="btn"
+onclick="checkURL()">
+[ ANALYZE URL ]</button>
+<div id="url-result" class="result"></div>
 </div>
 </div>
 
-<div class="section">
-<h2>// SECURITY TOOLS BUILT</h2>
-<div class="tools">
-<div class="tool">
-<div class="tool-icon">🔐</div>
-<h3>Password Strength Analyzer</h3>
-<p>Analyzes password security and
-provides improvement recommendations</p>
+<!-- PASSWORD -->
+<div id="panel-password" class="panel">
+<div class="tool-box">
+<h2>// PASSWORD STRENGTH ANALYZER</h2>
+<p>Check how strong your password is
+and get improvement tips</p>
+<input type="text" id="pwd-input"
+placeholder="Enter password to analyze...">
+<button class="btn"
+onclick="checkPassword()">
+[ ANALYZE PASSWORD ]</button>
+<div id="pwd-result" class="result"></div>
 </div>
-<div class="tool">
-<div class="tool-icon">🌐</div>
-<h3>Port Scanner</h3>
-<p>Custom network port scanner with
-service identification</p>
 </div>
-<div class="tool">
-<div class="tool-icon">🔍</div>
-<h3>Website Info Grabber</h3>
-<p>WHOIS, DNS records, IP resolution
-and open port detection</p>
+
+<!-- EMAIL -->
+<div id="panel-email" class="panel">
+<div class="tool-box">
+<h2>// EMAIL SAFETY CHECKER</h2>
+<p>Check if your email domain is safe
+and get email security tips</p>
+<input type="email" id="email-input"
+placeholder="Enter email address...">
+<button class="btn"
+onclick="checkEmail()">
+[ CHECK EMAIL SAFETY ]</button>
+<div id="email-result" class="result"></div>
 </div>
-<div class="tool">
-<div class="tool-icon">📧</div>
-<h3>Email Header Analyzer</h3>
-<p>Detects phishing and email
-spoofing attacks</p>
 </div>
-<div class="tool">
-<div class="tool-icon">🛡️</div>
-<h3>Intrusion Detection System</h3>
-<p>Real-time network monitoring for
-unauthorized access detection</p>
+
+<!-- NEWS -->
+<div id="panel-news" class="panel">
+<div class="tool-box">
+<h2>// CYBER FRAUD ALERTS — INDIA</h2>
+<p>Latest cybercrime trends and warnings
+you should know about</p>
 </div>
-<div class="tool">
-<div class="tool-icon">🔒</div>
-<h3>Crypto Toolkit</h3>
-<p>Hashing, encryption and file
-integrity verification</p>
+<div class="news-item">
+<h3>🚨 UPI Fraud on the Rise</h3>
+<p>Fraudsters are posing as bank officials
+and tricking victims into sharing OTPs.
+Never share OTP with anyone — banks
+never ask for OTPs on calls.</p>
+<div class="news-date">
+June 2026 | Source: CERT-In</div>
 </div>
-<div class="tool">
-<div class="tool-icon">🌐</div>
-<h3>Subdomain Finder</h3>
-<p>Multi-threaded subdomain
-enumeration for OSINT</p>
+<div class="news-item">
+<h3>⚠️ Fake Job Offer Scam</h3>
+<p>Cyber criminals are sending fake job
+offers via WhatsApp and Telegram
+asking for registration fees.
+Legitimate companies never charge
+fees for job applications.</p>
+<div class="news-date">
+June 2026 | Source: Cyber Cell</div>
 </div>
-<div class="tool">
-<div class="tool-icon">📸</div>
-<h3>Image Metadata Extractor</h3>
-<p>Extracts hidden EXIF data
-including GPS location</p>
+<div class="news-item">
+<h3>🔴 SIM Swap Fraud Alert</h3>
+<p>Attackers are submitting fake SIM
+swap requests to telecom operators
+to steal OTPs. Contact your telecom
+immediately if your SIM stops working
+unexpectedly.</p>
+<div class="news-date">
+June 2026 | Source: TRAI</div>
 </div>
-<div class="tool">
-<div class="tool-icon">📁</div>
-<h3>File Integrity Monitor</h3>
-<p>Detects unauthorized file
-modifications in real-time</p>
+<div class="news-item">
+<h3>⚠️ Fake Investment Apps</h3>
+<p>Multiple fake investment apps
+promising high returns are circulating
+on WhatsApp. Only use SEBI registered
+investment platforms.</p>
+<div class="news-date">
+June 2026 | Source: RBI</div>
 </div>
-<div class="tool">
-<div class="tool-icon">🤖</div>
-<h3>Auto Recon Tool</h3>
-<p>Full domain reconnaissance
-in one command</p>
+<div class="news-item">
+<h3>🚨 Aadhaar OTP Fraud</h3>
+<p>Fraudsters claiming to be UIDAI
+officials are calling citizens asking
+for Aadhaar OTPs. UIDAI never calls
+citizens asking for OTPs.</p>
+<div class="news-date">
+June 2026 | Source: UIDAI</div>
+</div>
+</div>
+
+<!-- ABOUT -->
+<div id="panel-about" class="panel">
+<div class="tool-box">
+<h2>// ABOUT THIS PLATFORM</h2>
+<p>Free cybersecurity tools built for
+every Indian internet user</p>
+</div>
+<div class="about-grid">
+<div class="about-card">
+<h3>👨‍💻 Built By</h3>
+<p>Jayesh Goyal<br>
+3rd Year BCA Student<br>
+SDJ International College, Gujarat<br>
+CEH | Google Cybersecurity<br>
+Deloitte Cyber Certificate</p>
+</div>
+<div class="about-card">
+<h3>🎯 Mission</h3>
+<p>Making cybersecurity accessible
+to every Indian. Most cyber frauds
+happen because of lack of awareness.
+This platform aims to change that
+— one scan at a time.</p>
+</div>
+<div class="about-card">
+<h3>🛠️ Tools Available</h3>
+<p>URL Phishing Checker<br>
+Password Strength Analyzer<br>
+Email Safety Checker<br>
+Cyber Fraud News Feed<br>
+More tools coming soon!</p>
+</div>
+<div class="about-card">
+<h3>📫 Connect</h3>
+<p>GitHub:<br>
+github.com/jayesh-goyal/cyber-toolkit<br><br>
+All tools are free forever.<br>
+No data is stored or shared.</p>
 </div>
 </div>
 </div>
 
-<div class="section">
-<h2>// SKILLS</h2>
-<div class="skills">
-<span class="skill">Python</span>
-<span class="skill">Linux/Termux</span>
-<span class="skill">Nmap</span>
-<span class="skill">Network Security</span>
-<span class="skill">Digital Forensics</span>
-<span class="skill">OSINT</span>
-<span class="skill">Ethical Hacking</span>
-<span class="skill">IT Act 2000/2008</span>
-<span class="skill">Bash Scripting</span>
-<span class="skill">Git/GitHub</span>
-<span class="skill">Cryptography</span>
-<span class="skill">Incident Response</span>
-</div>
-</div>
-
-<div class="section">
-<h2>// KNOWLEDGE AREAS</h2>
-<div class="skills">
-<span class="skill">IT Act Sections 66-72</span>
-<span class="skill">Chain of Custody</span>
-<span class="skill">Malware Analysis</span>
-<span class="skill">Phishing Detection</span>
-<span class="skill">Network Forensics</span>
-<span class="skill">CERT-In Procedures</span>
-<span class="skill">Cyber Cell Operations</span>
-<span class="skill">Evidence Preservation</span>
-</div>
-</div>
-
-<div class="contact">
-<h2 style="color:#00b4ff;margin-bottom:1rem;">
-// CONTACT
-</h2>
-<a href="https://github.com/jayesh-goyal/
-cyber-toolkit">GitHub</a>
-<a href="mailto:your@email.com">Email</a>
-<a href="https://zer0day.tech">zer0day.tech</a>
-</div>
+</div><!-- /container -->
 
 <footer>
-&gt; Jayesh Goyal | SDJ International College
-| Gujarat, India_
+Built with ❤️ by <span>Jayesh Goyal</span>
+| zer0day.tech | For educational and
+public safety purposes only
 </footer>
-</div>
+
+<script>
+// Tab switching
+function showTab(tab) {
+document.querySelectorAll('.panel')
+.forEach(p => p.classList.remove('active'));
+document.querySelectorAll('.tab')
+.forEach(t => t.classList.remove('active'));
+document.getElementById(
+'panel-'+tab).classList.add('active');
+event.target.classList.add('active');
+}
+
+// URL Checker
+function checkURL() {
+const url = document.getElementById(
+'url-input').value.trim();
+const result = document.getElementById(
+'url-result');
+if(!url){
+result.className='result warning show';
+result.innerHTML='⚠️ Please enter a URL!';
+return;
+}
+
+let score = 0;
+let flags = [];
+let safe = [];
+
+// Check HTTPS
+if(url.startsWith('https://')){
+score += 20;
+safe.push('✅ Uses HTTPS encryption');
+} else {
+flags.push('❌ No HTTPS — connection not encrypted!');
+}
+
+// Check for IP address
+if(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/
+.test(url)){
+flags.push('🚨 IP address used instead of domain — highly suspicious!');
+} else {
+score += 10;
+}
+
+// Check URL length
+if(url.length > 100){
+flags.push('⚠️ Very long URL — common in phishing attacks');
+} else {
+score += 10;
+safe.push('✅ Normal URL length');
+}
+
+// Check for suspicious keywords
+const suspicious = [
+'login','verify','update','secure',
+'account','banking','paypal','amazon',
+'netflix','confirm','click','free',
+'winner','prize','lucky','offer',
+'sbi','hdfc','icici','paytm','upi'
+];
+const urlLower = url.toLowerCase();
+let susCount = 0;
+suspicious.forEach(word => {
+if(urlLower.includes(word)) susCount++;
+});
+if(susCount >= 2){
+flags.push(`🚨 ${susCount} suspicious keywords found: possible phishing!`);
+} else if(susCount === 1){
+flags.push('⚠️ Contains suspicious keyword — verify carefully');
+score += 5;
+} else {
+score += 20;
+safe.push('✅ No suspicious keywords found');
+}
+
+// Check for multiple subdomains
+const parts = url.replace(
+'https://','').replace('http://','')
+.split('/')[0].split('.');
+if(parts.length > 3){
+flags.push('⚠️ Multiple subdomains — possible spoofing attempt');
+} else {
+score += 10;
+safe.push('✅ Normal domain structure');
+}
+
+// Check for special chars in domain
+const domain = url.replace(
+'https://','').replace('http://','')
+.split('/')[0];
+if(/[^a-zA-Z0-9\-\.]/.test(domain)){
+flags.push('🚨 Special characters in domain — very suspicious!');
+} else {
+score += 10;
+safe.push('✅ Clean domain name');
+}
+
+// Check for URL shorteners
+const shorteners = [
+'bit.ly','tinyurl','goo.gl',
+'t.co','ow.ly','short.link'
+];
+if(shorteners.some(s => url.includes(s))){
+flags.push('⚠️ URL shortener detected — destination unknown!');
+} else {
+score += 20;
+safe.push('✅ No URL shortener used');
+}
+
+// Determine result
+let verdict, cls;
+if(score >= 80 && flags.length === 0){
+verdict = '✅ LIKELY SAFE';
+cls = 'result safe show';
+} else if(score >= 50 || flags.length <= 1){
+verdict = '⚠️ SUSPICIOUS — Proceed with caution';
+cls = 'result warning show';
+} else {
+verdict = '🚨 DANGEROUS — Do NOT click this link!';
+cls = 'result danger show';
+}
+
+result.className = cls;
+result.innerHTML = `
+<strong>${verdict}</strong><br>
+Safety Score: ${score}/100<br>
+<div class="score-bar">
+<div class="score-fill" style="width:${score}%;
+background:${score>=80?'#00ff9d':
+score>=50?'#ffd60a':'#ff3b5c'}">
+</div></div><br>
+${flags.length > 0 ?
+'<strong>⚠️ Red Flags:</strong><br>' +
+flags.join('<br>') + '<br><br>' : ''}
+${safe.length > 0 ?
+'<strong>✅ Safe Indicators:</strong><br>' +
+safe.join('<br>') : ''}
+<br><br><em>Note: Always verify URLs
+before clicking. When in doubt,
+go directly to the official website.</em>
+`;
+}
+
+// Password Checker
+function checkPassword() {
+const pwd = document.getElementById(
+'pwd-input').value;
+const result = document.getElementById(
+'pwd-result');
+if(!pwd){
+result.className='result warning show';
+result.innerHTML='⚠️ Please enter a password!';
+return;
+}
+
+let score = 0;
+let tips = [];
+let good = [];
+
+if(pwd.length >= 12){
+score += 25;
+good.push('✅ Good length (12+ chars)');
+} else if(pwd.length >= 8){
+score += 15;
+tips.push('📌 Use 12+ characters for better security');
+} else {
+tips.push('❌ Too short! Use at least 8 characters');
+}
+
+if(/[A-Z]/.test(pwd)){
+score += 20;
+good.push('✅ Contains uppercase letters');
+} else {
+tips.push('❌ Add uppercase letters (A-Z)');
+}
+
+if(/[a-z]/.test(pwd)){
+score += 20;
+good.push('✅ Contains lowercase letters');
+} else {
+tips.push('❌ Add lowercase letters (a-z)');
+}
+
+if(/[0-9]/.test(pwd)){
+score += 20;
+good.push('✅ Contains numbers');
+} else {
+tips.push('❌ Add numbers (0-9)');
+}
+
+if(/[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/.test(pwd)){
+score += 15;
+good.push('✅ Contains special characters');
+} else {
+tips.push('❌ Add special chars (!@#$%^&*)');
+}
+
+const common = [
+'password','123456','qwerty',
+'abc123','password1','admin',
+'letmein','welcome','monkey','dragon'
+];
+if(common.some(c =>
+pwd.toLowerCase().includes(c))){
+score -= 30;
+tips.push('🚨 Contains common password pattern!');
+}
+
+score = Math.max(0, Math.min(100, score));
+let strength, cls;
+if(score >= 80){
+strength='💪 STRONG';cls='result safe show';
+} else if(score >= 50){
+strength='⚠️ MEDIUM';cls='result warning show';
+} else {
+strength='❌ WEAK';cls='result danger show';
+}
+
+// Crack time estimate
+let crackTime;
+if(score >= 80) crackTime =
+'Centuries to crack';
+else if(score >= 60) crackTime =
+'Years to crack';
+else if(score >= 40) crackTime =
+'Days to crack';
+else if(score >= 20) crackTime =
+'Hours to crack';
+else crackTime =
+'Seconds to crack! ⚠️';
+
+result.className = cls;
+result.innerHTML = `
+<strong>Strength: ${strength}</strong><br>
+Score: ${score}/100<br>
+<div class="score-bar">
+<div class="score-fill" style="width:${score}%;
+background:${score>=80?'#00ff9d':
+score>=50?'#ffd60a':'#ff3b5c'}">
+</div></div>
+Estimated crack time: ${crackTime}<br><br>
+${good.length>0?
+good.join('<br>')+'<br><br>':''}
+${tips.length>0?
+'<strong>Improve by:</strong><br>'+
+tips.join('<br>'):''}
+`;
+}
+
+// Email Checker
+function checkEmail() {
+const email = document.getElementById(
+'email-input').value.trim();
+const result = document.getElementById(
+'email-result');
+if(!email){
+result.className='result warning show';
+result.innerHTML='⚠️ Please enter an email!';
+return;
+}
+
+// Basic format check
+const emailRegex =
+/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if(!emailRegex.test(email)){
+result.className='result danger show';
+result.innerHTML=
+'❌ Invalid email format!';
+return;
+}
+
+const domain = email.split('@')[1]
+.toLowerCase();
+let flags = [];
+let safe = [];
+let score = 50;
+
+// Check trusted domains
+const trusted = [
+'gmail.com','yahoo.com','outlook.com',
+'hotmail.com','protonmail.com',
+'icloud.com','yahoo.in','rediffmail.com'
+];
+if(trusted.includes(domain)){
+score += 30;
+safe.push('✅ Trusted email provider');
+} else {
+safe.push('ℹ️ Custom domain email');
+score += 10;
+}
+
+// Check for suspicious patterns
+if(email.includes('..') ||
+email.startsWith('.')){
+flags.push('⚠️ Suspicious email format');
+score -= 20;
+}
+
+// Check domain length
+if(domain.length > 30){
+flags.push('⚠️ Unusually long domain');
+score -= 10;
+}
+
+// Tips
+const tips = [
+'💡 Never share your email on public posts',
+'💡 Use different emails for different purposes',
+'💡 Enable 2FA on your email account',
+'💡 Never click links in unexpected emails',
+'💡 Check sender address carefully before replying',
+'💡 Use app passwords instead of main password'
+];
+
+result.className='result info show';
+result.innerHTML=`
+<strong>Email Analysis: ${email}</strong>
+<br><br>
+Domain: <strong>${domain}</strong><br>
+Safety Score: ${score}/100<br>
+<div class="score-bar">
+<div class="score-fill"
+style="width:${Math.min(score,100)}%;
+background:#00b4ff">
+</div></div><br>
+${safe.join('<br>')}<br>
+${flags.length>0?
+flags.join('<br>')+'<br>':''}<br>
+<strong>🛡️ Email Safety Tips:</strong><br>
+${tips.join('<br>')}
+`;
+}
+</script>
 </body>
 </html>
